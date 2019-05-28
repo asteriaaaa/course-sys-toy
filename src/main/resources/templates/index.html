@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User information</title>
+</head>
+<body>
+<div style="text-align: center">
+    <h1 th:text="${user.getSchoolName()} +${'    '} + ${'Information System'}"></h1>
+    <h2>My Information</h2>
+    <a href="/edit_info">[Edit]</a>
+    <a th:if="${user.getPrivilege()} == ${'S'}" href="/my_grades">[See my grades]</a>
+    <a th:if="${user.getPrivilege()} == ${'A'}" href="/admin_page">[Admin Functions]</a>
+</div>
+<div align="center">
+
+<table align="center">
+    <tr>
+        <th>Uid</th>
+        <th>Account Name</th>
+        <th>User Name</th>
+        <th>Phone</th>
+        <th>Privilege</th>
+        <th>Register time</th>
+    </tr>
+    <tr id="items">
+        <td th:text="${user.getId()}" class="item"></td>
+        <td th:text="${user.getUserName()}" class="item"></td>
+        <td th:text="${user.getNickName()}" class="item"></td>
+        <td th:text="${user.getPhone()}" class="item"></td>
+        <td th:text="${user.getPrivilege()}" class="item"></td>
+        <td th:text="${user.getCreateDate()}" class="item"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

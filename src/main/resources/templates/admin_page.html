@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Tools</title>
+</head>
+<body>
+<div align="center">
+    <h3>Add or Modify User</h3>
+    <table align="center">
+    <tr>
+        <th>Uid</th>
+        <th>Account Name</th>
+        <th>User Name</th>
+        <th>Phone</th>
+        <th>Privilege</th>
+        <th>Register time</th>
+    </tr>
+    <tr th:each="user : ${userList}" th:if="${user.getPrivilege()} != ${'A'}" id="items">
+        <td th:text="${user.getId()}" class="item"></td>
+        <td th:text="${user.getUserName()}" class="item"></td>
+        <td th:text="${user.getNickName()}" class="item"></td>
+        <td th:text="${user.getPhone()}" class="item"></td>
+        <td th:text="${user.getPrivilege()}" class="item"></td>
+        <td th:text="${user.getCreateDate()}" class="item"></td>
+    </tr>
+</table>
+     Username: <input id="username" />
+     Privilege <input id="privilege" />
+    <button onclick="updateUser(1)">Update</button>
+    <button onclick="updateUser(0)">Delete</button>
+</div>
+
+<script th:inline="javascript">
+    function updateUser(flag) {
+        var newInfo={};
+        newInfo["username"] = document.getElementById("username").value ;
+        newInfo["privilege"] = document.getElementById("privilege").value;
+        newInfo["flag"] = flag;
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                window.location.href = request.responseText;
+            }
+            if (request.readyState === 4 && request.status >= 400) {
+                alert("Failed.");
+            }
+        };
+        request.open('POST', '/admin_update', true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify(newInfo));
+    }
+</script>
+</body>
+</html>
